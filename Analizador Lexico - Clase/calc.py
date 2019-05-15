@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 # ------------------------------------------------------------
  # calclex.py
  #
@@ -19,7 +20,12 @@ tokens = (
 'DCORCH',
 'IDENTIFICADOR',
 'IGUAL',
-'CADENA'
+'CADENA',
+'COMMENT',
+'BCOMMENT',
+'CMMUNGUION',
+'NUMERAL',
+'PMAL'
 )
 
 # Regular expression rules for simple tokens
@@ -31,15 +37,23 @@ t_LPAREN            = r'\('
 t_RPAREN            = r'\)'
 t_LCORCH            = r'\['
 t_DCORCH            = r'\]'
-t_IDENTIFICADOR     = r'[a-zA-z0-9_]+'
+t_IDENTIFICADOR     = r'[a-zA-z0-9]+'
 t_IGUAL             = r'\='
 t_CADENA            = r'\".*\"'
+t_COMMENT           = r'\/\*(.|\n)*\*\/'
+t_BCOMMENT          = r'\/\/.*'
+t_CMMUNGUION        = r'[a-zA-Z][a-zA-Z0-9]*\_{1}[a-zA-Z0-9]*$'
+t_NUMERAL           = r'\#\#(.|\n)*\#\#'
+t_PMAL              = r'http://paginamal.al.co'
 
+ 
+ 
+    
 
 # A regular expression rule with some action code
 def t_NUMBER(t):
  r'\d+'
- t.value = int(t.value)    
+ t.value = int(t.value)
  return t
 
     
@@ -68,7 +82,16 @@ analizador = lex.lex()
 
 # Test it out
 data = '''
- "Hola Caro" js
+ /*Santa
+ a ver
+ pelien */
+
+ aA098_3189
+
+ ##Santa
+ a ver
+ ese ##
+ 
 '''
 
 # Give the lexer some input
