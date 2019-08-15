@@ -9,7 +9,7 @@ tokens = [
   'YAND','OOR','ASIGNAR','MAYORQUE','MENORQUE','ACCESO',
   'MENORIGUAL','MAYORIGUAL','COMPIGUAL','COMPDIFERENTE','FINALIZADOR','LLAVEDER',
   'CADENA','BIN','COMILLASIMPLE','COMA',
-  'LLAVEIZQ', 'COMMENT', 'NUMEROC', 'COMILLADOBLE'
+  'LLAVEIZQ', 'COMMENT', 'COMMENTLINEA', 'NUMEROC', 'COMILLADOBLE'
 ]
 
 #PALABRAS RESERVADAS POR MINIJAVA
@@ -37,7 +37,7 @@ reservadas = {
 tokens += reservadas.values()
 
 #TOKENS UNITARIOS
-t_ignore = '[ \t\n]'
+t_ignore = '[ \t]'
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_POR = r'\*'
@@ -64,6 +64,12 @@ t_LLAVEIZQ = r'\{'
 t_COMILLASIMPLE = r'\''
 t_COMA = r'\,'
 t_COMILLADOBLE = r'\"'
+
+
+def t_newline(t):
+    r'\n'
+    t.lexer.lineno += 1
+
 
 #CIENTIFICO
 def t_NUMEROC(t):
@@ -118,16 +124,15 @@ def Reemplazar(palabra):
 #COMENTARIOS /* */
 ##COMENTARIOS DE LA FORMA /* SIN CERRAR SE DEBERIAN CONSIDERAR ERROR
 def t_COMMENT(t):
-	r'((\/\/[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\@\(\)\[\]\{\}\,\;\:\_\.\-\t\ ]*)|(\/\*[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\@\(\)\[\]\{\}\,\;\:\_\.\-\t\n\ ]*\*\/))'
+	r'((\/\*[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\@\(\)\[\]\{\}\,\;\:\_\.\-\t\ ]*)|(\/\*[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\@\(\)\[\]\{\}\,\;\:\_\.\-\t\n\ ]*\*\/))'
 	for i in t.value:
 		if(re.search(r'\n', i)):
 			t.lexer.lineno += 1
-	return t
 
-#NUEVA LINEA
-def t_newline(t):
-	r'([\r])+'
-	t.lexer.lineno += len(t.value)
+def t_COMMENTLINEA(t):
+	r'//.*\n'	
+	t.lexer.lineno += 1
+
 
 #DETECCION DE ERRORES
 def t_error(t):

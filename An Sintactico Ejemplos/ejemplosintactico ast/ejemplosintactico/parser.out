@@ -1,0 +1,360 @@
+
+
+Unused terminals:
+
+
+Grammar
+
+Rule 1     statement -> IDENT IGUAL expression
+Rule 2     statement -> expression
+Rule 3     expression -> expression MAS expression
+Rule 4     expression -> expression MENOS expression
+Rule 5     expression -> expression MULT expression
+Rule 6     expression -> expression DIVISION expression
+Rule 7     expression -> PARENIZQ expression PARENDER
+Rule 8     expression -> NUMERO
+Rule 9     expression -> IDENT
+
+Terminals, with rules where they appear
+
+DIVISION             : 6
+IDENT                : 1 9
+IGUAL                : 1
+MAS                  : 3
+MENOS                : 4
+MULT                 : 5
+NUMERO               : 8
+PARENDER             : 7
+PARENIZQ             : 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 1 2 3 3 4 4 5 5 6 6 7
+statement            : 0
+
+
+Parsing method: SLR
+
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . IDENT IGUAL expression
+    (2) statement -> . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression MULT expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . PARENIZQ expression PARENDER
+    (8) expression -> . NUMERO
+    (9) expression -> . IDENT
+
+    IDENT           shift and go to state 1
+    PARENIZQ        shift and go to state 3
+    NUMERO          shift and go to state 2
+
+
+    expression                     shift and go to state 5
+    statement                      shift and go to state 4
+
+state 1
+
+    (1) statement -> IDENT . IGUAL expression
+    (9) expression -> IDENT .
+
+    IGUAL           shift and go to state 6
+    $end            reduce using rule 9 (expression -> IDENT .)
+    MAS             reduce using rule 9 (expression -> IDENT .)
+    MENOS           reduce using rule 9 (expression -> IDENT .)
+    MULT            reduce using rule 9 (expression -> IDENT .)
+    DIVISION        reduce using rule 9 (expression -> IDENT .)
+    PARENDER        reduce using rule 9 (expression -> IDENT .)
+
+
+
+state 2
+
+    (8) expression -> NUMERO .
+
+    $end            reduce using rule 8 (expression -> NUMERO .)
+    MAS             reduce using rule 8 (expression -> NUMERO .)
+    MENOS           reduce using rule 8 (expression -> NUMERO .)
+    MULT            reduce using rule 8 (expression -> NUMERO .)
+    DIVISION        reduce using rule 8 (expression -> NUMERO .)
+    PARENDER        reduce using rule 8 (expression -> NUMERO .)
+
+
+
+state 3
+
+    (7) expression -> PARENIZQ . expression PARENDER
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression MULT expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . PARENIZQ expression PARENDER
+    (8) expression -> . NUMERO
+    (9) expression -> . IDENT
+
+    PARENIZQ        shift and go to state 3
+    NUMERO          shift and go to state 2
+    IDENT           shift and go to state 7
+
+
+    expression                     shift and go to state 8
+
+state 4
+
+    (0) S' -> statement .
+
+
+
+
+state 5
+
+    (2) statement -> expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . MULT expression
+    (6) expression -> expression . DIVISION expression
+
+    $end            reduce using rule 2 (statement -> expression .)
+    MAS             shift and go to state 10
+    MENOS           shift and go to state 11
+    MULT            shift and go to state 12
+    DIVISION        shift and go to state 9
+
+
+
+state 6
+
+    (1) statement -> IDENT IGUAL . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression MULT expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . PARENIZQ expression PARENDER
+    (8) expression -> . NUMERO
+    (9) expression -> . IDENT
+
+    PARENIZQ        shift and go to state 3
+    NUMERO          shift and go to state 2
+    IDENT           shift and go to state 7
+
+
+    expression                     shift and go to state 13
+
+state 7
+
+    (9) expression -> IDENT .
+
+    $end            reduce using rule 9 (expression -> IDENT .)
+    MAS             reduce using rule 9 (expression -> IDENT .)
+    MENOS           reduce using rule 9 (expression -> IDENT .)
+    MULT            reduce using rule 9 (expression -> IDENT .)
+    DIVISION        reduce using rule 9 (expression -> IDENT .)
+    PARENDER        reduce using rule 9 (expression -> IDENT .)
+
+
+
+state 8
+
+    (7) expression -> PARENIZQ expression . PARENDER
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . MULT expression
+    (6) expression -> expression . DIVISION expression
+
+    PARENDER        shift and go to state 14
+    MAS             shift and go to state 10
+    MENOS           shift and go to state 11
+    MULT            shift and go to state 12
+    DIVISION        shift and go to state 9
+
+
+
+state 9
+
+    (6) expression -> expression DIVISION . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression MULT expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . PARENIZQ expression PARENDER
+    (8) expression -> . NUMERO
+    (9) expression -> . IDENT
+
+    PARENIZQ        shift and go to state 3
+    NUMERO          shift and go to state 2
+    IDENT           shift and go to state 7
+
+
+    expression                     shift and go to state 15
+
+state 10
+
+    (3) expression -> expression MAS . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression MULT expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . PARENIZQ expression PARENDER
+    (8) expression -> . NUMERO
+    (9) expression -> . IDENT
+
+    PARENIZQ        shift and go to state 3
+    NUMERO          shift and go to state 2
+    IDENT           shift and go to state 7
+
+
+    expression                     shift and go to state 16
+
+state 11
+
+    (4) expression -> expression MENOS . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression MULT expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . PARENIZQ expression PARENDER
+    (8) expression -> . NUMERO
+    (9) expression -> . IDENT
+
+    PARENIZQ        shift and go to state 3
+    NUMERO          shift and go to state 2
+    IDENT           shift and go to state 7
+
+
+    expression                     shift and go to state 17
+
+state 12
+
+    (5) expression -> expression MULT . expression
+    (3) expression -> . expression MAS expression
+    (4) expression -> . expression MENOS expression
+    (5) expression -> . expression MULT expression
+    (6) expression -> . expression DIVISION expression
+    (7) expression -> . PARENIZQ expression PARENDER
+    (8) expression -> . NUMERO
+    (9) expression -> . IDENT
+
+    PARENIZQ        shift and go to state 3
+    NUMERO          shift and go to state 2
+    IDENT           shift and go to state 7
+
+
+    expression                     shift and go to state 18
+
+state 13
+
+    (1) statement -> IDENT IGUAL expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . MULT expression
+    (6) expression -> expression . DIVISION expression
+
+    $end            reduce using rule 1 (statement -> IDENT IGUAL expression .)
+    MAS             shift and go to state 10
+    MENOS           shift and go to state 11
+    MULT            shift and go to state 12
+    DIVISION        shift and go to state 9
+
+
+
+state 14
+
+    (7) expression -> PARENIZQ expression PARENDER .
+
+    $end            reduce using rule 7 (expression -> PARENIZQ expression PARENDER .)
+    MAS             reduce using rule 7 (expression -> PARENIZQ expression PARENDER .)
+    MENOS           reduce using rule 7 (expression -> PARENIZQ expression PARENDER .)
+    MULT            reduce using rule 7 (expression -> PARENIZQ expression PARENDER .)
+    DIVISION        reduce using rule 7 (expression -> PARENIZQ expression PARENDER .)
+    PARENDER        reduce using rule 7 (expression -> PARENIZQ expression PARENDER .)
+
+
+
+state 15
+
+    (6) expression -> expression DIVISION expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . MULT expression
+    (6) expression -> expression . DIVISION expression
+
+    $end            reduce using rule 6 (expression -> expression DIVISION expression .)
+    MAS             reduce using rule 6 (expression -> expression DIVISION expression .)
+    MENOS           reduce using rule 6 (expression -> expression DIVISION expression .)
+    MULT            reduce using rule 6 (expression -> expression DIVISION expression .)
+    DIVISION        reduce using rule 6 (expression -> expression DIVISION expression .)
+    PARENDER        reduce using rule 6 (expression -> expression DIVISION expression .)
+
+  ! MAS             [ shift and go to state 10 ]
+  ! MENOS           [ shift and go to state 11 ]
+  ! MULT            [ shift and go to state 12 ]
+  ! DIVISION        [ shift and go to state 9 ]
+
+
+state 16
+
+    (3) expression -> expression MAS expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . MULT expression
+    (6) expression -> expression . DIVISION expression
+
+    $end            reduce using rule 3 (expression -> expression MAS expression .)
+    MAS             reduce using rule 3 (expression -> expression MAS expression .)
+    MENOS           reduce using rule 3 (expression -> expression MAS expression .)
+    PARENDER        reduce using rule 3 (expression -> expression MAS expression .)
+    MULT            shift and go to state 12
+    DIVISION        shift and go to state 9
+
+  ! MULT            [ reduce using rule 3 (expression -> expression MAS expression .) ]
+  ! DIVISION        [ reduce using rule 3 (expression -> expression MAS expression .) ]
+  ! MAS             [ shift and go to state 10 ]
+  ! MENOS           [ shift and go to state 11 ]
+
+
+state 17
+
+    (4) expression -> expression MENOS expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . MULT expression
+    (6) expression -> expression . DIVISION expression
+
+    $end            reduce using rule 4 (expression -> expression MENOS expression .)
+    MAS             reduce using rule 4 (expression -> expression MENOS expression .)
+    MENOS           reduce using rule 4 (expression -> expression MENOS expression .)
+    PARENDER        reduce using rule 4 (expression -> expression MENOS expression .)
+    MULT            shift and go to state 12
+    DIVISION        shift and go to state 9
+
+  ! MULT            [ reduce using rule 4 (expression -> expression MENOS expression .) ]
+  ! DIVISION        [ reduce using rule 4 (expression -> expression MENOS expression .) ]
+  ! MAS             [ shift and go to state 10 ]
+  ! MENOS           [ shift and go to state 11 ]
+
+
+state 18
+
+    (5) expression -> expression MULT expression .
+    (3) expression -> expression . MAS expression
+    (4) expression -> expression . MENOS expression
+    (5) expression -> expression . MULT expression
+    (6) expression -> expression . DIVISION expression
+
+    $end            reduce using rule 5 (expression -> expression MULT expression .)
+    MAS             reduce using rule 5 (expression -> expression MULT expression .)
+    MENOS           reduce using rule 5 (expression -> expression MULT expression .)
+    MULT            reduce using rule 5 (expression -> expression MULT expression .)
+    DIVISION        reduce using rule 5 (expression -> expression MULT expression .)
+    PARENDER        reduce using rule 5 (expression -> expression MULT expression .)
+
+  ! MAS             [ shift and go to state 10 ]
+  ! MENOS           [ shift and go to state 11 ]
+  ! MULT            [ shift and go to state 12 ]
+  ! DIVISION        [ shift and go to state 9 ]
+
